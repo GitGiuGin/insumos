@@ -1,31 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<h2>User List</h2>
-    <a href="test.php">Add New User</a>
-    <br><br>
-    <?php include 'logic/Usuario.php';
-    include 'db/conn.php';
-    $usuario = new Usuario($conn);
-    $usuario->consultar();
+<?php
 
-    $rol = 2; // Suponiendo que 1 es el ID del rol que deseas asignar al nuevo usuario
-    $nombre = "Carlos";
-    $apellido = "Mamani";
-    $num_documento = "456";
-    $telefono = "76230230";
-    $direccion = "123 Main St";
-    $correo = "carlos.mamani@gmail.com";
-    $contrasena = "password123";
+include_once 'poo/Cliente.php';
 
-    $usuario->agregar($rol, $nombre, $apellido, $num_documento, $telefono, $direccion, $correo, $contrasena);
-    ?>
+#$cliente = new Cliente();
+#$cliente->nombre = "Valentina";
+#$cliente->apellido = "Espejo";
+#$cliente->tipo_documento = "NIT";
+#$cliente->num_documento = "78451263";
+#$cliente->direccion = "Cementerio";
+#$cliente->telefono = "76252361";
+#$cliente->correo = "valentina.espejo@gmail.com";
+#$cliente->contrasena = "456789";
+#$cliente->crear();
 
+//$cliente = Cliente::getId(11);
+//$cliente->tipo_documento = "Carnet";
+//$cliente->actualizar();
 
-</body>
-</html>
+#REVISAR
+//$cliente = Cliente::getId(11);
+//$cliente->eliminar();
+
+/*$clientes = Cliente::consultar();
+?>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Tipo de documento</th>
+            <th>#Documento</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Contraseña</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($clientes as $cliente){ ?>
+        <tr>
+            <td><?php echo $cliente->id; ?></td>
+            <td><?php echo $cliente->nombre; ?></td>
+            <td><?php echo $cliente->apellido; ?></td>
+            <td><?php echo $cliente->tipo_documento; ?></td>
+            <td><?php echo $cliente->num_documento; ?></td>
+            <td><?php echo $cliente->direccion; ?></td>
+            <td><?php echo $cliente->telefono; ?></td>
+            <td><?php echo $cliente->correo; ?></td>
+            <td><?php echo $cliente->contrasena; ?></td>
+        </tr>
+    <?php } ?>
+    </tbody>
+</table>*/
