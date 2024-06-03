@@ -1,3 +1,22 @@
+<?php
+// Incluir el archivo de lógica del Cliente
+include_once 'logic/Producto.php';
+
+// Verificar si se ha enviado una solicitud para eliminar un cliente
+if (isset($_GET['eliminar_id'])) {
+    // Obtener el ID del cliente a eliminar
+    $cliente_id = $_GET['eliminar_id'];
+
+    // Eliminar el cliente con el ID proporcionado
+    $producto = Producto::getId($cliente_id);
+    $producto->eliminar();
+    header('Location: clientes.php');
+    exit();
+}
+
+// Consultar la lista de clientes
+$productos = Producto::consultar();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -83,7 +102,6 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
@@ -95,53 +113,23 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // Conexión a la base de datos
-                $conexion = new mysqli('localhost', 'root', '', 'insumos');
+                <?php foreach ($productos as $producto) { ?>
+                    <tr>
+                        <td><?php echo $producto->codigo; ?></td>
+                        <td><?php echo $producto->nombre; ?></td>
+                        <td><?php echo $producto->categoria; ?></td>
+                        <td><?php echo $producto->precio_compra; ?></td>
+                        <td><?php echo $producto->precio_venta; ?></td>
+                        <td><?php echo $producto->cantidad; ?></td>
+                        <td><a href='actualizar_producto.php?id=<?php echo $producto->id; ?>'>Editar</a></td>
+                        <td><a href='productos.php?eliminar_id=<?php echo $producto->id; ?>'>Eliminar</a></td>
 
-                // Verificar si la conexión fue exitosa
-                if ($conexion->connect_error) {
-                    die('Error de conexión: ' . $conexion->connect_error);
-                }
-
-                // Consulta SQL para obtener los datos de la tabla de productos
-                $sql = "SELECT p.id, p.codigo, p.nombre, p.id_categoria, p.precio_compra, p.precio_venta, p.cantidad
-            FROM producto p";
-                $resultado = $conexion->query($sql);
-
-                // Recorrer los resultados y generar las filas de la tabla
-                if ($resultado->num_rows > 0) {
-                    while ($fila = $resultado->fetch_assoc()) {
-                        // Consulta SQL para obtener el nombre de la categoría
-                        $id_categoria = $fila['id_categoria'];
-                        $sql_categoria = "SELECT nombre FROM categoria WHERE id = $id_categoria";
-                        $resultado_categoria = $conexion->query($sql_categoria);
-                        $categoria = $resultado_categoria->fetch_assoc();
-                        $nombre_categoria = $categoria['nombre'];
-
-                        echo "<tr>";
-                        echo "<td>" . $fila['id'] . "</td>";
-                        echo "<td>" . $fila['codigo'] . "</td>";
-                        echo "<td>" . $fila['nombre'] . "</td>";
-                        echo "<td>" . $nombre_categoria . "</td>"; // Mostrar el nombre de la categoría
-                        echo "<td>" . $fila['precio_compra'] . "</td>";
-                        echo "<td>" . $fila['precio_venta'] . "</td>";
-                        echo "<td>" . $fila['cantidad'] . "</td>";
-                        echo "<td><a href='editar_producto.php?id=" . $fila['id'] . "'>Editar</a></td>";
-                        echo "<td><a href='eliminar_producto.php?id=" . $fila['id'] . "'>Eliminar</a></td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='9'>No se encontraron productos en la base de datos.</td></tr>";
-                }
-
-                // Cerrar la conexión
-                $conexion->close();
-                ?>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <a href="registrar_producto.php" class="btn btn-success btn-add-product">Agregar Producto</a>
+            <a href="registrar_producto.php" class="btn btn-success btn-add-product mb-3">Agregar Producto</a>
         </div>
     </div>
 </body>

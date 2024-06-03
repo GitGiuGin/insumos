@@ -62,49 +62,76 @@
 <body>
     <div class="container mt-5">
         <h1>Actualizar Producto</h1>
-        <form action="agregar_producto.php" method="POST">
+        <?php
+        include_once 'logic/Producto.php';
+        $id = $_GET['id'];
+        $producto = Producto::getId($id);
+        ?>
+
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            include_once("logic/Producto.php");
+            $update = new Producto();
+
+            $update->id = $_POST['id'];
+            $update->codigo = $_POST['codigo'];
+            $update->nombre = $_POST['nombre'];
+            $update->id_categoria = $_POST['id_categoria'];
+            $update->precio_compra = $_POST['precio_compra'];
+            $update->precio_venta = $_POST['precio_venta'];
+            $update->cantidad = $_POST['cantidad'];
+            $update->actualizar();
+
+            // Redireccionar después de la actualización
+            header("Location: productos.php");
+            exit();
+        }
+        ?>
+        <form action="actualizar_producto.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="id" class="form-label">ID</label>
-                    <input type="number" class="form-control" id="id" name="id" required>
+                    <input type="number" class="form-control" id="id" name="id" value="<?php echo $producto->id; ?>" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="codigo" class="form-label">Código</label>
-                    <input type="text" class="form-control" id="codigo" name="codigo" required>
+                    <input type="text" class="form-control" id="codigo" name="codigo" value="<?php echo $producto->codigo; ?>" readonly>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $producto->nombre; ?>" readonly>
                 </div>
                 <div class="col-md-4 mb-2">
-                    <label for="id_categoria" class="form-label">ID Categoría</label>
+                    <label for="id_categoria" class="form-label">Categoría</label>
                     <a href="registrar_categoria.php">Nueva Categoria</a>
+                    <?php
+                    include_once 'logic/Categoria.php';
+                    $categorias = Categoria::consultar(); // Suponiendo que tienes un método estático en la clase Categoria para consultar las categorías
+                    ?>
                     <select class="form-select" id="id_categoria" name="id_categoria" required>
                         <option value="" disabled selected>Seleccione una categoría</option>
-                        <?php
-                        foreach ($categorias as $categoria) {
-                            echo "<option value='" . $categoria['id'] . "'>" . $categoria['nombre'] . "</option>";
-                        }
-                        ?>
+                        <?php foreach ($categorias as $categoria) { ?>
+                            <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre; ?></option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="precio_compra" class="form-label">Precio Compra</label>
-                    <input type="number" step="0.01" class="form-control" id="precio_compra" name="precio_compra" required>
+                    <input type="number" step="0.01" class="form-control" id="precio_compra" name="precio_compra" value="<?php echo $producto->precio_compra; ?>" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="precio_venta" class="form-label">Precio Venta</label>
-                    <input type="number" step="0.01" class="form-control" id="precio_venta" name="precio_venta" required>
+                    <input type="number" step="0.01" class="form-control" id="precio_venta" name="precio_venta" value="<?php echo $producto->precio_venta; ?>" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="cantidad" class="form-label">Cantidad</label>
-                    <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+                    <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $producto->cantidad; ?>" readonly>
                 </div>
             </div>
             <div class="d-flex justify-content-end">

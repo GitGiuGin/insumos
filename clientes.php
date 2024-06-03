@@ -88,7 +88,7 @@ $clientes = Cliente::consultar();
                 <label class="form-check-label" for="categoria1">Nombre</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="numero_de_documento" id="numero_de_documento" value="numero_de_documento">
+                <input class="form-check-input" type="radio" name="nombre" id="numero_de_documento" value="numero_de_documento">
                 <label class="form-check-label" for="categoria2">Numero de Documento</label>
             </div>
             <!-- Añadimos mas segun necesitemos -->

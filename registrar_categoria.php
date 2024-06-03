@@ -1,30 +1,20 @@
 <?php
-// Conexión a la base de datos
-$conexion = new mysqli('localhost', 'root', '', 'insumos');
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        include_once("logic/Categoria.php");
+        $categoria = new Categoria();
 
-// Verifica la conexión
-if ($conexion->connect_error) {
-    die('Error de conexión: ' . $conexion->connect_error);
-}
+        $categoria->nombre = $_POST['nombre'];
+        $categoria->crear();
 
-// Manejar el envío del formulario
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener el valor enviado desde el formulario
-    $nombre = $_POST['nombre'];
-
-    // Preparar la consulta SQL para insertar los datos
-    $sql = "INSERT INTO categoria (nombre) VALUES ('$nombre')";
-
-    // Ejecutar la consulta
-    if ($conexion->query($sql) === TRUE) {
-        echo "Categoría registrada exitosamente";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conexion->error;
+        header("Location: actualizar_producto.php");
+        exit();
+    } catch (Exception $e) {
+        // Manejo de errores
+        $errorMessage = $e->getMessage();
+        // Aquí puedes redirigir a una página de error, registrar el error, etc.
     }
 }
-
-// Cerrar la conexión
-$conexion->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -90,7 +80,7 @@ $conexion->close();
 <body>
     <div class="container mt-5">
         <h1>Registrar Categoría</h1>
-        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <form action="registrar_categoria.php" method="POST">>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>

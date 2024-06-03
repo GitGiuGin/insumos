@@ -95,9 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="registrar_cliente.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <input type="hidden" class="form-control" id="id" name="id" required>
-                </div>
-                <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" required>
                 </div>

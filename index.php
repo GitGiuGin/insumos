@@ -99,7 +99,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <a href="registrar_producto.php" class="btn btn-success btn-add-product">Agregar Producto</a>
+            <a href="registrar_producto.php" class="btn btn-success btn-add-product mb-3">Agregar Producto</a>
         </div>
     </div>
 </body>
