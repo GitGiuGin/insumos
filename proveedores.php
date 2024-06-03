@@ -1,3 +1,23 @@
+<?php
+// Incluir el archivo de lógica del Cliente
+include_once 'logic/Proveedor.php';
+
+// Verificar si se ha enviado una solicitud para eliminar un cliente
+if(isset($_GET['eliminar_id'])) {
+    // Obtener el ID del cliente a eliminar
+    $proveedor_id = $_GET['eliminar_id'];
+    
+    // Eliminar el cliente con el ID proporcionado
+    $proveedor = Proveedor::getId($proveedor_id);
+    $proveedor->eliminar();
+    header('Location: proveedores.php');
+    exit();
+}
+
+// Consultar la lista de clientes
+$proveedores = Proveedor::consultar();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -79,8 +99,8 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nombre</th>
+                    <th>NIT</th>
                     <th>Telefono</th>
                     <th>Correo</th>
                     <th>Direccion</th>
@@ -89,44 +109,21 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Consulta a la base de datos -->
-                <?php
-                // Conexión a la base de datos
-                $conexion = new mysqli('localhost', 'root', '', 'insumos');
-
-                // Verificar si la conexión fue exitosa
-                if ($conexion->connect_error) {
-                    die('Error de conexión: ' . $conexion->connect_error);
-                }
-
-                // Consulta SQL para obtener los datos de la tabla de alquileres
-                $sql = "SELECT * FROM proveedor";
-                $resultado = $conexion->query($sql);
-
-                // Recorrer los resultados y generar las filas de la tabla
-                if ($resultado->num_rows > 0) {
-                    while ($fila = $resultado->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $fila['id'] . "</td>";
-                        echo "<td>" . $fila['nombre'] . "</td>";
-                        echo "<td>" . $fila['telefono'] . "</td>";
-                        echo "<td>" . $fila['correo'] . "</td>";
-                        echo "<td>" . $fila['direccion'] . "</td>";
-                        echo "<td><a href='editar_proveedor.php?id=" . $fila['id'] . "'>Editar</a></td>";
-                        echo "<td><a href='eliminar_proveedor.php?id=" . $fila['id'] . "'>Eliminar</a></td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='7'>No se encontraron proveedores en la base de datos.</td></tr>";
-                }
-
-                // Cerrar la conexión
-                $conexion->close();
-                ?>
+            <?php foreach($proveedores as $proveedor){ ?>
+                <tr>
+                    <td><?php echo $proveedor->nombre; ?></td>
+                    <td><?php echo $proveedor->num_documento; ?></td>
+                    <td><?php echo $proveedor->telefono; ?></td>
+                    <td><?php echo $proveedor->correo; ?></td>
+                    <td><?php echo $proveedor->direccion; ?></td>
+                    <td><a href='actualizar_proveedor.php?id=<?php echo $proveedor->id; ?>'>Editar</a></td>
+                    <td><a href='proveedores.php?eliminar_id=<?php echo $proveedor->id; ?>'>Eliminar</a></td>
+                </tr>
+                <?php } ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <a href="registrar_proveedor.php" class="btn btn-success btn-add-product">Agregar Proveedor</a>
+            <a href="registrar_proveedor.php" class="btn btn-success btn-add-product mb-3">Agregar Proveedor</a>
         </div>
     </div>
 </body>

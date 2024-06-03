@@ -92,7 +92,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="id" class="form-label">ID</label>
-                    <input type="number" class="form-control" id="id" name="id" value="<?php echo $cliente->id; ?>" required>
+                    <input type="text" class="form-control" id="id" name="id" value="<?php echo $cliente->id; ?>" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>

@@ -62,35 +62,58 @@
 <body>
     <div class="container mt-5">
         <h1>Actualizar Proveedor</h1>
-        <form action="agregar_proveedor.php" method="POST">
+        <?php
+            include_once 'logic/Proveedor.php';
+            $id = $_GET['id'];
+            $proveedor = Proveedor::getId($id);
+        ?>
+        <?php
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                include_once("logic/Proveedor.php");
+                $update = new Proveedor();
+
+                $update->id = $_POST['id'];
+                $update->nombre = $_POST['nombre'];
+                $update->num_documento = $_POST['numero_documento'];
+                $update->telefono = $_POST['telefono'];
+                $update->correo = $_POST['correo'];
+                $update->direccion = $_POST['direccion'];
+                $update->actualizar();
+                
+                // Redireccionar después de la actualización
+                header("Location: proveedores.php");
+                exit();
+            }
+        ?>
+        <form action="actualizar_proveedor.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="id" class="form-label">ID</label>
-                    <input type="number" class="form-control" id="id" name="id" required>
+                    <input type="text" class="form-control" id="id" name="id" value="<?php echo $proveedor->id; ?>" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    <input type="text" class="form-control" id="nombre" name="nombre"  value="<?php echo $proveedor->nombre; ?>"required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" required>
+                    <input type="text" class="form-control" id="telefono" name="telefono"  value="<?php echo $proveedor->telefono; ?>"required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="correo" class="form-label">Correo</label>
-                    <input type="email" class="form-control" id="correo" name="correo" required>
+                    <input type="email" class="form-control" id="correo" name="correo"  value="<?php echo $proveedor->correo; ?>"required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 mb-3">
                     <label for="direccion" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" required>
+                    <input type="text" class="form-control" id="direccion" name="direccion"  value="<?php echo $proveedor->direccion; ?>"required>
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='index.php';">Cancelar</button>
+                <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='proveedores.php';">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
             </div>
         </form>

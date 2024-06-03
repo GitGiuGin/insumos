@@ -2,22 +2,20 @@
 
 include_once "db/Conexion.php";
 
-class Cliente extends Conexion{
+class Proveedor extends Conexion{
 
     public $id;
     public $nombre;
-    public $apellido;
-    public $tipo_documento;
     public $num_documento;
-    public $direccion;
     public $telefono;
     public $correo;
+    public $direccion;
 
     public function crear(){
         $this->conectar();
-        $sql = "INSERT INTO cliente(nombre, apellido, tipo_documento, num_documento, direccion, telefono, correo) VALUES (?,?,?,?,?,?,?)"; //Conulta SQL
+        $sql = "INSERT INTO proveedor(nombre, num_documento, telefono, correo, direccion) VALUES (?,?,?,?,?)"; //Conulta SQL
         $pre = mysqli_prepare($this->conn, $sql); //Preparacion de consulta para evitar inyecciones SQL
-        $pre->bind_param("sssssss", $this->nombre, $this->apellido, $this->tipo_documento, $this->num_documento, $this->direccion, $this->telefono, $this->correo);
+        $pre->bind_param("sssss", $this->nombre, $this->num_documento, $this->telefono, $this->correo, $this->direccion);
         $pre->execute(); //Se ejecuta la consulta
         $res = $pre->get_result(); //Devuelve boolean para verificar si se hizo la consulta
     }
@@ -25,41 +23,41 @@ class Cliente extends Conexion{
     public static function consultar(){
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "SELECT * FROM cliente";
+        $sql = "SELECT * FROM proveedor";
         $pre = mysqli_prepare($conexion->conn, $sql);
         $pre->execute();
         $res = $pre->get_result();
-        $clientes = [];
-        while($cliente = $res->fetch_object(Cliente::class))
+        $proveedores = [];
+        while($proveedor = $res->fetch_object(Proveedor::class))
         {
-            array_push($clientes, $cliente);  
+            array_push($proveedores, $proveedor);  
         }
-        return $clientes;
+        return $proveedores;
     }
 
     public function actualizar(){
         $this->conectar();
-        $sql = "UPDATE cliente SET nombre=?, apellido=?, tipo_documento=?, num_documento=?, direccion=?, telefono=?, correo=? WHERE id=?";
+        $sql = "UPDATE proveedor SET nombre=?, num_documento=?, telefono=?, correo=?, direccion=?, WHERE id=?";
         $pre = mysqli_prepare($this->conn, $sql);
-        $pre->bind_param("sssssssi", $this->nombre, $this->apellido, $this->tipo_documento, $this->num_documento, $this->direccion, $this->telefono, $this->correo, $this->id);
+        $pre->bind_param("sssssi", $this->nombre, $this->num_documento, $this->telefono, $this->correo, $this->direccion, $this->id);
         $pre->execute();
     }
 
     public static function getId($id){
         $conexion = new Conexion();
         $conexion->conectar();
-        $sql = "SELECT * FROM cliente WHERE id=?";
+        $sql = "SELECT * FROM proveedor WHERE id=?";
         $pre = mysqli_prepare($conexion->conn, $sql);
         $pre->bind_param("i", $id);
         $pre->execute();
         $res = $pre->get_result();
-        return $res->fetch_object(Cliente::class);
+        return $res->fetch_object(Proveedor::class);
     }
 
     //Revisar
     public function eliminar(){
         $this->conectar();
-        $sql = "DELETE FROM cliente WHERE id=?";
+        $sql = "DELETE FROM proveedor WHERE id=?";
         $pre = mysqli_prepare($this->conn, $sql);
         $pre->bind_param("i", $this->id);
         $pre->execute();

@@ -102,7 +102,6 @@ $clientes = Cliente::consultar();
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Tipo documento</th>
@@ -115,10 +114,8 @@ $clientes = Cliente::consultar();
                 </tr>
             </thead>
             <tbody>
-                
                 <?php foreach($clientes as $cliente){ ?>
                 <tr>
-                    <td><?php echo $cliente->id; ?></td>
                     <td><?php echo $cliente->nombre; ?></td>
                     <td><?php echo $cliente->apellido; ?></td>
                     <td><?php echo $cliente->tipo_documento; ?></td>
@@ -134,7 +131,7 @@ $clientes = Cliente::consultar();
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <a href="registrar_cliente.php" class="btn btn-success btn-add-product">Agregar Cliente</a>
+            <a href="registrar_cliente.php" class="btn btn-success btn-add-product mb-3">Agregar Cliente</a>
         </div>
     </div>
 </body>

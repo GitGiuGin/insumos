@@ -1,3 +1,28 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        include_once("logic/Cliente.php");
+        $cliente = new Cliente();
+
+        $cliente->nombre = $_POST['nombre'];
+        $cliente->apellido = $_POST['apellido'];
+        $cliente->tipo_documento = $_POST['tipo_documento'];
+        $cliente->num_documento = $_POST['numero_documento'];
+        $cliente->direccion = $_POST['direccion'];
+        $cliente->telefono = $_POST['telefono'];
+        $cliente->correo = $_POST['correo'];
+        $cliente->crear();
+
+        header("Location: clientes.php");
+        exit();
+    } catch (Exception $e) {
+        // Manejo de errores
+        $errorMessage = $e->getMessage();
+        // Aquí puedes redirigir a una página de error, registrar el error, etc.
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -8,6 +33,11 @@
     <!-- Enlace al CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
+    <script>
+        function showError(message) {
+            alert(message);
+        }
+    </script>
 </head>
 <header>
     <!-- Navbar -->
@@ -65,7 +95,6 @@
         <form action="registrar_cliente.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="id" class="form-label">ID</label>
                     <input type="hidden" class="form-control" id="id" name="id" required>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -112,25 +141,13 @@
                 <button type="submit" class="btn btn-primary">Registrar</button>
             </div>
         </form>
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            include_once("logic/Cliente.php");
-            $cliente = new Cliente();
-
-            $cliente->nombre = $_POST['nombre'];
-            $cliente->apellido = $_POST['apellido'];
-            $cliente->tipo_documento = $_POST['tipo_documento'];
-            $cliente->num_documento = $_POST['numero_documento'];
-            $cliente->direccion = $_POST['direccion'];
-            $cliente->telefono = $_POST['telefono'];
-            $cliente->correo = $_POST['correo'];
-            $cliente->contrasena = "";
-            $cliente->crear();
-            echo "<br>";
-            echo "<p class='alert alert-success'>Cliente registrado exitosamente.</p>";
-        }
-        ?>
     </div>
+
+    <?php if (isset($errorMessage)): ?>
+    <script>
+        showError('<?php echo addslashes($errorMessage); ?>');
+    </script>
+    <?php endif; ?>
 </body>
 
 <!-- Enlace al JS de Bootstrap -->
