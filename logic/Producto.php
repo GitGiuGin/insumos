@@ -2,17 +2,15 @@
 
 include_once "db/Conexion.php";
 
-class Cliente extends Conexion{
+class Producto extends Conexion{
 
     public $id;
+    public $codigo;
     public $nombre;
-    public $apellido;
-    public $tipo_documento;
-    public $num_documento;
-    public $direccion;
-    public $telefono;
-    public $correo;
-    public $contrasena;
+    public $id_categoria;
+    public $precio_compra;
+    public $precio_venta;
+    public $cantidad;
 
     public function crear(){
         $this->conectar();

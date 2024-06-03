@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="productos.php">Productos</a>
+                        <a class="nav-link btn btn-outline-primary active" aria-current="page" href="productos.php">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-primary" href="proveedores.php">Proveedores</a>
@@ -86,7 +86,7 @@
                     <th>ID</th>
                     <th>Código</th>
                     <th>Nombre</th>
-                    <th>ID Categoria</th>
+                    <th>Categoria</th>
                     <th>Precio Compra</th>
                     <th>Precio Venta</th>
                     <th>Cantidad</th>
@@ -95,7 +95,49 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Consulta a la base de datos -->
+                <?php
+                // Conexión a la base de datos
+                $conexion = new mysqli('localhost', 'root', '', 'insumos');
+
+                // Verificar si la conexión fue exitosa
+                if ($conexion->connect_error) {
+                    die('Error de conexión: ' . $conexion->connect_error);
+                }
+
+                // Consulta SQL para obtener los datos de la tabla de productos
+                $sql = "SELECT p.id, p.codigo, p.nombre, p.id_categoria, p.precio_compra, p.precio_venta, p.cantidad
+            FROM producto p";
+                $resultado = $conexion->query($sql);
+
+                // Recorrer los resultados y generar las filas de la tabla
+                if ($resultado->num_rows > 0) {
+                    while ($fila = $resultado->fetch_assoc()) {
+                        // Consulta SQL para obtener el nombre de la categoría
+                        $id_categoria = $fila['id_categoria'];
+                        $sql_categoria = "SELECT nombre FROM categoria WHERE id = $id_categoria";
+                        $resultado_categoria = $conexion->query($sql_categoria);
+                        $categoria = $resultado_categoria->fetch_assoc();
+                        $nombre_categoria = $categoria['nombre'];
+
+                        echo "<tr>";
+                        echo "<td>" . $fila['id'] . "</td>";
+                        echo "<td>" . $fila['codigo'] . "</td>";
+                        echo "<td>" . $fila['nombre'] . "</td>";
+                        echo "<td>" . $nombre_categoria . "</td>"; // Mostrar el nombre de la categoría
+                        echo "<td>" . $fila['precio_compra'] . "</td>";
+                        echo "<td>" . $fila['precio_venta'] . "</td>";
+                        echo "<td>" . $fila['cantidad'] . "</td>";
+                        echo "<td><a href='editar_producto.php?id=" . $fila['id'] . "'>Editar</a></td>";
+                        echo "<td><a href='eliminar_producto.php?id=" . $fila['id'] . "'>Eliminar</a></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='9'>No se encontraron productos en la base de datos.</td></tr>";
+                }
+
+                // Cerrar la conexión
+                $conexion->close();
+                ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end">

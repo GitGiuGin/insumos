@@ -20,10 +20,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="productos.php">Productos</a>
+                        <a class="nav-link btn btn-outline-primary" aria-current="page" href="productos.php">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="proveedores.php">Proveedores</a>
+                        <a class="nav-link btn btn-outline-primary active" href="proveedores.php">Proveedores</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-primary" href="clientes.php">Clientes</a>
@@ -65,12 +65,8 @@
         <form class="d-flex" action="buscar.php" method="GET">
             <input class="form-control me-2" type="search" name="query" placeholder="Buscar" aria-label="Buscar">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="categoria" id="categoria" value="categoria">
-                <label class="form-check-label" for="categoria1">Categoría</label>
-            </div>
-            <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="nombre" id="nombre" value="nombre">
-                <label class="form-check-label" for="categoria2">Nombre</label>
+                <label class="form-check-label" for="categoria1">Nombre</label>
             </div>
             <!-- Añadimos mas segun necesitemos -->
             <button class="btn btn-outline-success" type="submit">Buscar</button>
@@ -79,27 +75,58 @@
     </div>
 
     <div class="container mt-5">
-        <h1 class="mb-4">Lista de Productos</h1>
+        <h1 class="mb-4">Lista de Proveedores</h1>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Código</th>
                     <th>Nombre</th>
-                    <th>ID Categoria</th>
-                    <th>Precio Compra</th>
-                    <th>Precio Venta</th>
-                    <th>Cantidad</th>
+                    <th>Telefono</th>
+                    <th>Correo</th>
+                    <th>Direccion</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Consulta a la base de datos -->
+                <?php
+                // Conexión a la base de datos
+                $conexion = new mysqli('localhost', 'root', '', 'insumos');
+
+                // Verificar si la conexión fue exitosa
+                if ($conexion->connect_error) {
+                    die('Error de conexión: ' . $conexion->connect_error);
+                }
+
+                // Consulta SQL para obtener los datos de la tabla de alquileres
+                $sql = "SELECT * FROM proveedor";
+                $resultado = $conexion->query($sql);
+
+                // Recorrer los resultados y generar las filas de la tabla
+                if ($resultado->num_rows > 0) {
+                    while ($fila = $resultado->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $fila['id'] . "</td>";
+                        echo "<td>" . $fila['nombre'] . "</td>";
+                        echo "<td>" . $fila['telefono'] . "</td>";
+                        echo "<td>" . $fila['correo'] . "</td>";
+                        echo "<td>" . $fila['direccion'] . "</td>";
+                        echo "<td><a href='editar_proveedor.php?id=" . $fila['id'] . "'>Editar</a></td>";
+                        echo "<td><a href='eliminar_proveedor.php?id=" . $fila['id'] . "'>Eliminar</a></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>No se encontraron proveedores en la base de datos.</td></tr>";
+                }
+
+                // Cerrar la conexión
+                $conexion->close();
+                ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <a href="registrar_producto.php" class="btn btn-success btn-add-product">Agregar Producto</a>
+            <a href="registrar_proveedor.php" class="btn btn-success btn-add-product">Agregar Proveedor</a>
         </div>
     </div>
 </body>

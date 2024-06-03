@@ -20,13 +20,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="productos.php">Productos</a>
+                        <a class="nav-link btn btn-outline-primary" aria-current="page" href="productos.php">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-primary" href="proveedores.php">Proveedores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="clientes.php">Clientes</a>
+                        <a class="nav-link btn btn-outline-primary active" href="clientes.php">Clientes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-primary" href="ventas.php">Ventas</a>
@@ -65,12 +65,12 @@
         <form class="d-flex" action="buscar.php" method="GET">
             <input class="form-control me-2" type="search" name="query" placeholder="Buscar" aria-label="Buscar">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="categoria" id="categoria" value="categoria">
-                <label class="form-check-label" for="categoria1">Categoría</label>
+                <input class="form-check-input" type="radio" name="nombre" id="nombre" value="nombre">
+                <label class="form-check-label" for="categoria1">Nombre</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="nombre" id="nombre" value="nombre">
-                <label class="form-check-label" for="categoria2">Nombre</label>
+                <input class="form-check-input" type="radio" name="numero_de_documento" id="numero_de_documento" value="numero_de_documento">
+                <label class="form-check-label" for="categoria2">Numero de Documento</label>
             </div>
             <!-- Añadimos mas segun necesitemos -->
             <button class="btn btn-outline-success" type="submit">Buscar</button>
@@ -79,27 +79,46 @@
     </div>
 
     <div class="container mt-5">
-        <h1 class="mb-4">Lista de Productos</h1>
+        <h1 class="mb-4">Lista de Clientes</h1>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Código</th>
                     <th>Nombre</th>
-                    <th>ID Categoria</th>
-                    <th>Precio Compra</th>
-                    <th>Precio Venta</th>
-                    <th>Cantidad</th>
+                    <th>Apellido</th>
+                    <th>Tipo documento</th>
+                    <th>Numero documento</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Correo</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Consulta a la base de datos -->
+                <?php
+                    include_once 'logic/Cliente.php';
+                    $clientes = Cliente::consultar();
+                ?>
+
+                <?php foreach($clientes as $cliente){ ?>
+                <tr>
+                    <td><?php echo $cliente->id; ?></td>
+                    <td><?php echo $cliente->nombre; ?></td>
+                    <td><?php echo $cliente->apellido; ?></td>
+                    <td><?php echo $cliente->tipo_documento; ?></td>
+                    <td><?php echo $cliente->num_documento; ?></td>
+                    <td><?php echo $cliente->direccion; ?></td>
+                    <td><?php echo $cliente->telefono; ?></td>
+                    <td><?php echo $cliente->correo; ?></td>
+                    <td><a href='actualizar_cliente.php?id=<?php echo $cliente->id; ?>'>Editar</a></td>
+                    <td><a href='eliminar_cliente.php?id=<?php echo $cliente->id; ?>'>Eliminar</a></td>
+                </tr>
+                <?php } ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <a href="registrar_producto.php" class="btn btn-success btn-add-product">Agregar Producto</a>
+            <a href="registrar_cliente.php" class="btn btn-success btn-add-product">Agregar Cliente</a>
         </div>
     </div>
 </body>

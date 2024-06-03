@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="productos.php">Productos</a>
+                        <a class="nav-link btn btn-outline-primary" aria-current="page" href="productos.php">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-primary" href="proveedores.php">Proveedores</a>
@@ -35,7 +35,7 @@
                         <a class="nav-link btn btn-outline-primary" href="compras.php">Compras</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="alquiler.php">Alquileres</a>
+                        <a class="nav-link btn btn-outline-primary active" href="alquiler.php">Alquileres</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -65,12 +65,12 @@
         <form class="d-flex" action="buscar.php" method="GET">
             <input class="form-control me-2" type="search" name="query" placeholder="Buscar" aria-label="Buscar">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="categoria" id="categoria" value="categoria">
-                <label class="form-check-label" for="categoria1">Categoría</label>
+                <input class="form-check-input" type="radio" name="cliente" id="cliente" value="cliente">
+                <label class="form-check-label" for="categoria1">Cliente</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="nombre" id="nombre" value="nombre">
-                <label class="form-check-label" for="categoria2">Nombre</label>
+                <input class="form-check-input" type="radio" name="usuario" id="usuario" value="usuario">
+                <label class="form-check-label" for="categoria2">Usuario</label>
             </div>
             <!-- Añadimos mas segun necesitemos -->
             <button class="btn btn-outline-success" type="submit">Buscar</button>
@@ -79,27 +79,62 @@
     </div>
 
     <div class="container mt-5">
-        <h1 class="mb-4">Lista de Productos</h1>
+        <h1 class="mb-4">Lista de Alquileres</h1>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>ID Categoria</th>
-                    <th>Precio Compra</th>
-                    <th>Precio Venta</th>
-                    <th>Cantidad</th>
+                    <th>ID Cliente</th>
+                    <th>ID Usuario</th>
+                    <th>Numero de comprobante</th>
+                    <th>Dias</th>
+                    <th>Fecha limite</th>
+                    <th>Total</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Consulta a la base de datos -->
+                <?php
+                // Conexión a la base de datos
+                $conexion = new mysqli('localhost', 'root', '', 'insumos');
+
+                // Verificar si la conexión fue exitosa
+                if ($conexion->connect_error) {
+                    die('Error de conexión: ' . $conexion->connect_error);
+                }
+
+                // Consulta SQL para obtener los datos de la tabla de alquileres
+                $sql = "SELECT * FROM alquiler";
+                $resultado = $conexion->query($sql);
+
+                // Recorrer los resultados y generar las filas de la tabla
+                if ($resultado->num_rows > 0) {
+                    while ($fila = $resultado->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $fila['id'] . "</td>";
+                        echo "<td>" . $fila['id_cliente'] . "</td>";
+                        echo "<td>" . $fila['id_usuario'] . "</td>";
+                        echo "<td>" . $fila['numero_comprobante'] . "</td>";
+                        echo "<td>" . $fila['dias'] . "</td>";
+                        echo "<td>" . $fila['fecha_limite'] . "</td>";
+                        echo "<td>" . $fila['total'] . "</td>";
+                        echo "<td><a href='actualizar_alquiler.php?id=" . $fila['id'] . "'>Editar</a></td>";
+                        echo "<td><a href='eliminar.php?id=" . $fila['id'] . "'>Eliminar</a></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='9'>No hay alquileres registrados</td></tr>";
+                }
+
+                // Cerrar la conexión
+                $conexion->close();
+                ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <a href="registrar_producto.php" class="btn btn-success btn-add-product">Agregar Producto</a>
+            <a href="registrar_alquiler.php" class="btn btn-success btn-add-product">Registrar Alquiler</a>
         </div>
     </div>
 </body>

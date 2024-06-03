@@ -1,160 +1,70 @@
 <?php
 
-class Usuario
-{
+include_once "db/Conexion.php";
 
-    private $conn;
+class Cliente extends Conexion{
 
-    public function __construct($conn)
-    {
-        $this->conn = $conn;
+    public $id;
+    public $nombre;
+    public $apellido;
+    public $tipo_documento;
+    public $num_documento;
+    public $direccion;
+    public $telefono;
+    public $correo;
+    public $contrasena;
+
+    public function crear(){
+        $this->conectar();
+        $sql = "INSERT INTO cliente(nombre, apellido, tipo_documento, num_documento, direccion, telefono, correo, contrasena) VALUES (?,?,?,?,?,?,?,?)"; //Conulta SQL
+        $pre = mysqli_prepare($this->conn, $sql); //Preparacion de consulta para evitar inyecciones SQL
+        $pre->bind_param("ssssssss", $this->nombre, $this->apellido, $this->tipo_documento, $this->num_documento, $this->direccion, $this->telefono, $this->correo, $this->contrasena);
+        $pre->execute(); //Se ejecuta la consulta
+        $res = $pre->get_result(); //Devuelve boolean para verificar si se hizo la consulta
     }
 
-    public function consultar()
-    {
-        include 'db/conn.php';
-        $sql = "SELECT u.id, r.nombre AS rol, u.nombre, u.apellido, u.num_documento, u.telefono, u.direccion, u.correo, u.contrasena
-                FROM usuario u JOIN rol r
-                ON u.id_rol = r.id
-                ORDER BY u.id ASC";
-        $result = $this->conn->query($sql);
-
-        if ($result->num_rows > 0) {
-?>
-            <table border="1">
-                <tr>
-                    <th><?php echo "ID"; ?></th>
-                    <th><?php echo "Rol"; ?></th>
-                    <th><?php echo "Nombre"; ?></th>
-                    <th><?php echo "Apellido"; ?></th>
-                    <th><?php echo "Documento"; ?></th>
-                    <th><?php echo "Teléfono"; ?></th>
-                    <th><?php echo "Dirección"; ?></th>
-                    <th><?php echo "Correo"; ?></th>
-                    <th><?php echo "Contraseña"; ?></th>
-                    <th><?php echo "Accion 1"; ?></th>
-                    <th><?php echo "Accion 2"; ?></th>
-                </tr>
-                <?php
-                while ($row = $result->fetch_assoc()) {
-                ?>
-                    <tr>
-                        <td><?php echo $row["id"]; ?></td>
-                        <td><?php echo $row["rol"]; ?></td>
-                        <td><?php echo $row["nombre"]; ?></td>
-                        <td><?php echo $row["apellido"]; ?></td>
-                        <td><?php echo $row["num_documento"]; ?></td>
-                        <td><?php echo $row["telefono"]; ?></td>
-                        <td><?php echo $row["direccion"]; ?></td>
-                        <td><?php echo $row["correo"]; ?></td>
-                        <td><?php echo $row["contrasena"]; ?></td>
-                        <td>
-                            <a href='form/frmUser.php?id=<?php echo $row["id"]; ?>'>Editar</a>
-                        </td>
-                        </td>
-                        <td>
-                            <a href='index.php?id=<?php echo $row["id"]; ?>'>Eliminar</a>
-                        </td>
-                    </tr>
-                <?php
-                }
-                ?>
-            </table>
-<?php
-        } else {
-            echo "0 results";
+    public static function consultar(){
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $sql = "SELECT * FROM cliente";
+        $pre = mysqli_prepare($conexion->conn, $sql);
+        $pre->execute();
+        $res = $pre->get_result();
+        $clientes = [];
+        while($cliente = $res->fetch_object(Cliente::class))
+        {
+            array_push($clientes, $cliente);  
         }
-        $conn->close();
+        return $clientes;
     }
 
-    public function agregar($rol, $nombre, $apellido, $num_documento, $telefono, $direccion, $correo, $contrasena)
-    {
-        include 'db/conn.php';
-
-        try {
-            // Preparar la consulta SQL para insertar un nuevo usuario
-            $stmt = $this->conn->prepare("INSERT INTO usuario (id_rol, nombre, apellido, num_documento, telefono, direccion, correo, contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-
-            // Enlazar parámetros con valores
-            $stmt->bind_param("isssssss", $rol, $nombre, $apellido, $num_documento, $telefono, $direccion, $correo, $contrasena);
-
-            // Ejecutar la consulta preparada
-            if ($stmt->execute() === TRUE) {
-                echo "Nuevo usuario creado exitosamente";
-            } else {
-                throw new Exception("Error al crear el usuario: " . $this->conn->error);
-            }
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-
-        // Cerrar la conexión
-        $this->conn->close();
+    public function actualizar(){
+        $this->conectar();
+        $sql = "UPDATE cliente SET nombre=?, apellido=?, tipo_documento=?, num_documento=?, direccion=?, telefono=?, correo=?, contrasena=? WHERE id=?";
+        $pre = mysqli_prepare($this->conn, $sql);
+        $pre->bind_param("ssssssssi", $this->nombre, $this->apellido, $this->tipo_documento, $this->num_documento, $this->direccion, $this->telefono, $this->correo, $this->contrasena, $this->id);
+        $pre->execute();
     }
 
-    public function btnEditar($id)
-    {
-        include '../db/conn.php';
-
-        $sql = "SELECT u.id, r.nombre AS rol, u.nombre, u.apellido, u.num_documento, u.telefono, u.direccion, u.correo, u.contrasena
-        FROM usuario u JOIN rol r
-        ON u.id_rol = r.id 
-        WHERE u.id=?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id); // "i" indica que $id es un entero
-        $stmt->execute();
-        $res = $stmt->get_result()->fetch_assoc();
-        return $res;
+    public function getId($id){
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $sql = "SELECT * FROM cliente WHERE id=?";
+        $pre = mysqli_prepare($conexion->conn, $sql);
+        $pre->bind_param("i", $id);
+        $pre->execute();
+        $res = $pre->get_result();
+        return $res->fetch_object(Cliente::class);
     }
 
-    /*ESTA EN PRUEBA ESTE METODO */
-    public function actualizar($id, $nombre, $apellido, $num_documento, $telefono, $direccion, $correo, $contrasena) {
-        include 'db/conn.php';
-        
-        try {
-            // Actualizar la información del usuario en la base de datos
-            $sql = "UPDATE usuario SET nombre='$nombre', apellido='$apellido', num_documento='$num_documento', telefono='$telefono', direccion='$direccion', correo='$correo', contrasena='$contrasena' WHERE id=$id";
-            
-            if ($conn->query($sql) === TRUE) {
-                echo "Registro actualizado correctamente";
-                
-            } else {
-                throw new Exception("Error al actualizar el registro: " . $conn->error);
-            }
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    
-        $conn->close();
-    }
-
-    /*ESTA EN PRUEBA ESTE METODO*/
-    public function eliminar($id)
-    {
-        include 'db/conn.php';
-
-        try {
-            // Consulta SQL para eliminar el usuario
-            $sql = "DELETE FROM usuario WHERE id = ?";
-
-            // Preparar la consulta
-            $stmt = $this->conn->prepare($sql);
-
-            // Enlazar parámetro ID
-            $stmt->bind_param("i", $id);
-
-            // Ejecutar la consulta
-            if ($stmt->execute() === TRUE) {
-                echo "Usuario eliminado exitosamente";
-            } else {
-                throw new Exception("Error al eliminar el usuario: " . $this->conn->error);
-            }
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-
-        // Cerrar la conexión
-        $this->conn->close();
+    //Revisar
+    public function eliminar(){
+        $this->conectar();
+        $sql = "DELETE FROM cliente WHERE id=?";
+        $pre = mysqli_prepare($this->conn, $sql);
+        $pre->bind_param("i", $this->id);
+        $pre->execute();
     }
 }
+
 ?>
