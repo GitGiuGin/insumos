@@ -1,10 +1,10 @@
 <?php
     
     // Incluir el archivo que contiene la definición de la clase
-    require_once 'logic/Cliente.php';
+    require_once '../logic/Cliente.php';
     
     // Crear una instancia de la clase
-    $productoController = new ProductoController();
+    $cliente = new Cliente();
     
     // Verificar si se envió el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,7 +19,7 @@
         $correo = $_POST['correo'];
     
         // Llamar al método correspondiente de la clase
-        $cliete->actualizar();
+        $cliente->actualizar();
     }
     
 ?>

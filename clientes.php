@@ -1,3 +1,22 @@
+<?php
+// Incluir el archivo de lógica del Cliente
+include_once 'logic/Cliente.php';
+
+// Verificar si se ha enviado una solicitud para eliminar un cliente
+if(isset($_GET['eliminar_id'])) {
+    // Obtener el ID del cliente a eliminar
+    $cliente_id = $_GET['eliminar_id'];
+    
+    // Eliminar el cliente con el ID proporcionado
+    $cliente = Cliente::getId($cliente_id);
+    $cliente->eliminar();
+    header('Location: clientes.php');
+    exit();
+}
+
+// Consultar la lista de clientes
+$clientes = Cliente::consultar();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -96,11 +115,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                    include_once 'logic/Cliente.php';
-                    $clientes = Cliente::consultar();
-                ?>
-
+                
                 <?php foreach($clientes as $cliente){ ?>
                 <tr>
                     <td><?php echo $cliente->id; ?></td>
@@ -112,7 +127,8 @@
                     <td><?php echo $cliente->telefono; ?></td>
                     <td><?php echo $cliente->correo; ?></td>
                     <td><a href='actualizar_cliente.php?id=<?php echo $cliente->id; ?>'>Editar</a></td>
-                    <td><a href='eliminar_cliente.php?id=<?php echo $cliente->id; ?>'>Eliminar</a></td>
+                    <td><a href='clientes.php?eliminar_id=<?php echo $cliente->id; ?>'>Eliminar</a></td>
+                    
                 </tr>
                 <?php } ?>
             </tbody>

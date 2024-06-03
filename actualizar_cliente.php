@@ -67,7 +67,28 @@
             $id = $_GET['id'];
             $cliente = Cliente::getId($id);
         ?>
-        <form action="logic/Cliente.php" method="POST">
+
+        <?php
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                include_once("logic/Cliente.php");
+                $update = new Cliente();
+
+                $update->id = $_POST['id'];
+                $update->nombre = $_POST['nombre'];
+                $update->apellido = $_POST['apellido'];
+                $update->tipo_documento = $_POST['tipo_documento'];
+                $update->num_documento = $_POST['numero_documento'];
+                $update->direccion = $_POST['direccion'];
+                $update->telefono = $_POST['telefono'];
+                $update->correo = $_POST['correo'];
+                $update->actualizar();
+                
+                // Redireccionar después de la actualización
+                header("Location: clientes.php");
+                exit();
+            }
+            ?>
+        <form action="actualizar_cliente.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="id" class="form-label">ID</label>
@@ -113,32 +134,10 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='index.php';">Cancelar</button>
+                <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='clientes.php';">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
-                <?php
-                    /*
-                    $id = $_POST['id'];
-                    $nombre = $_POST['nombre'];
-                    $apellido = $_POST['apellido'];
-                    $tipo_documento = $_POST['tipo_documento'];
-                    $numero_documento = $_POST['numero_documento'];
-                    $direccion = $_POST['direccion'];
-                    $telefono = $_POST['telefono'];
-                    $correo = $_POST['correo'];
-                    
-
-                    $cliente->id = $id;
-                    $cliente->nombre = $nombre;
-                    $cliente->apellido = $apellido;
-                    $cliente->tipo_documento = $tipo_documento;
-                    $cliente->num_documento = $numero_documento;
-                    $cliente->direccion = $direccion;
-                    $cliente->telefono = $telefono;
-                    $cliente->correo = $correo;
-
-                    $cliente->actualizar();*/
-                ?>
             </div>
+            
         </form>
     </div>
 </body>

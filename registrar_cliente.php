@@ -62,11 +62,11 @@
 <body>
     <div class="container mt-5">
         <h1>Agregar Cliente</h1>
-        <form action="agregar_cliente.php" method="POST">
+        <form action="registrar_cliente.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="id" class="form-label">ID</label>
-                    <input type="number" class="form-control" id="id" name="id" required>
+                    <input type="hidden" class="form-control" id="id" name="id" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
@@ -82,9 +82,8 @@
                     <label for="tipo_documento" class="form-label">Tipo de Documento</label>
                     <select class="form-select" id="tipo_documento" name="tipo_documento" required>
                         <option value="" disabled selected>Seleccione el tipo de documento</option>
-                        <option value="DNI">DNI</option>
-                        <option value="Pasaporte">Pasaporte</option>
-                        <option value="Cédula">Cédula</option>
+                        <option value="Carnet de identidad">Carnet de identidad</option>
+                        <option value="NIT">NIT</option>
                     </select>
                 </div>
             </div>
@@ -113,6 +112,24 @@
                 <button type="submit" class="btn btn-primary">Registrar</button>
             </div>
         </form>
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            include_once("logic/Cliente.php");
+            $cliente = new Cliente();
+
+            $cliente->nombre = $_POST['nombre'];
+            $cliente->apellido = $_POST['apellido'];
+            $cliente->tipo_documento = $_POST['tipo_documento'];
+            $cliente->num_documento = $_POST['numero_documento'];
+            $cliente->direccion = $_POST['direccion'];
+            $cliente->telefono = $_POST['telefono'];
+            $cliente->correo = $_POST['correo'];
+            $cliente->contrasena = "";
+            $cliente->crear();
+            echo "<br>";
+            echo "<p class='alert alert-success'>Cliente registrado exitosamente.</p>";
+        }
+        ?>
     </div>
 </body>
 
