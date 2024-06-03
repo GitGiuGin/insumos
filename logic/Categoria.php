@@ -30,7 +30,7 @@ class Categoria extends Conexion{
         $pre->execute();
         $res = $pre->get_result();
         $categorias = [];
-        while($categoria = $res->fetch_object(Producto::class))
+        while($categoria = $res->fetch_object(Categoria::class))
         {
             array_push($categorias, $categoria);  
         }

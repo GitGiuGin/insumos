@@ -10,7 +10,7 @@ if (isset($_GET['eliminar_id'])) {
     // Eliminar el cliente con el ID proporcionado
     $producto = Producto::getId($cliente_id);
     $producto->eliminar();
-    header('Location: clientes.php');
+    header('Location: productos.php');
     exit();
 }
 

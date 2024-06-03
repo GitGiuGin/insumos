@@ -1,42 +1,26 @@
 <?php
-// Conexión a la base de datos
-$conexion = new mysqli('localhost', 'root', '', 'insumos');
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        include_once("logic/Producto.php");
+        $producto = new Producto();
 
-// Verifica la conexión
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
+        $producto->codigo = $_POST['codigo'];
+        $producto->nombre = $_POST['nombre'];
+        $producto->id_categoria = $_POST['id_categoria'];
+        $producto->precio_compra = $_POST['precio_compra'];
+        $producto->precio_venta = $_POST['precio_venta'];
+        $producto->cantidad = $_POST['cantidad'];
+        $producto->crear();
 
-// Obtener las categorías desde la base de datos
-$sql_categorias = "SELECT id, nombre FROM categoria";
-$resultado_categorias = $conexion->query($sql_categorias);
-$categorias = $resultado_categorias->fetch_all(MYSQLI_ASSOC);
-
-// Manejar el envío del formulario
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener los valores enviados desde el formulario
-    $codigo = $_POST['codigo'];
-    $nombre = $_POST['nombre'];
-    $id_categoria = $_POST['id_categoria'];
-    $precio_compra = $_POST['precio_compra'];
-    $precio_venta = $_POST['precio_venta'];
-    $cantidad = $_POST['cantidad'];
-
-    // Preparar la consulta SQL para insertar los datos
-    $sql = "INSERT INTO producto (codigo, nombre, id_categoria, precio_compra, precio_venta, cantidad) VALUES ('$codigo', '$nombre', '$id_categoria', '$precio_compra', '$precio_venta', '$cantidad')";
-
-    // Ejecutar la consulta
-    if ($conexion->query($sql) === TRUE) {
-        echo "Producto registrado exitosamente";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conexion->error;
+        header("Location: productos.php");
+        exit();
+    } catch (Exception $e) {
+        // Manejo de errores
+        $errorMessage = $e->getMessage();
+        // Aquí puedes redirigir a una página de error, registrar el error, etc.
     }
 }
-
-// Cerrar la conexión
-$conexion->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -99,7 +83,7 @@ $conexion->close();
 </header>
 
 <body>
-<div class="container mt-5">
+    <div class="container mt-5">
         <h1>Agregar Producto</h1>
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <div class="row">
@@ -116,13 +100,15 @@ $conexion->close();
                 <div class="col-md-4 mb-2">
                     <label for="id_categoria" class="form-label">Categoría</label>
                     <a href="registrar_categoria.php">Nueva Categoría</a>
+                    <?php
+                    include_once 'logic/Categoria.php';
+                    $categorias = Categoria::consultar(); // Suponiendo que tienes un método estático en la clase Categoria para consultar las categorías
+                    ?>
                     <select class="form-select" id="id_categoria" name="id_categoria" required>
                         <option value="" disabled selected>Seleccione una categoría</option>
-                        <?php
-                        foreach ($categorias as $categoria) {
-                            echo "<option value='" . $categoria['id'] . "'>" . $categoria['nombre'] . "</option>";
-                        }
-                        ?>
+                        <?php foreach ($categorias as $categoria) { ?>
+                            <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre; ?></option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>

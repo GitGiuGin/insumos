@@ -63,31 +63,31 @@
     <div class="container mt-5">
         <h1>Actualizar Cliente</h1>
         <?php
-            include_once 'logic/Cliente.php';
-            $id = $_GET['id'];
-            $cliente = Cliente::getId($id);
+        include_once 'logic/Cliente.php';
+        $id = $_GET['id'];
+        $cliente = Cliente::getId($id);
         ?>
 
         <?php
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                include_once("logic/Cliente.php");
-                $update = new Cliente();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            include_once("logic/Cliente.php");
+            $update = new Cliente();
 
-                $update->id = $_POST['id'];
-                $update->nombre = $_POST['nombre'];
-                $update->apellido = $_POST['apellido'];
-                $update->tipo_documento = $_POST['tipo_documento'];
-                $update->num_documento = $_POST['numero_documento'];
-                $update->direccion = $_POST['direccion'];
-                $update->telefono = $_POST['telefono'];
-                $update->correo = $_POST['correo'];
-                $update->actualizar();
-                
-                // Redireccionar después de la actualización
-                header("Location: clientes.php");
-                exit();
-            }
-            ?>
+            $update->id = $_POST['id'];
+            $update->nombre = $_POST['nombre'];
+            $update->apellido = $_POST['apellido'];
+            $update->tipo_documento = $_POST['tipo_documento'];
+            $update->num_documento = $_POST['numero_documento'];
+            $update->direccion = $_POST['direccion'];
+            $update->telefono = $_POST['telefono'];
+            $update->correo = $_POST['correo'];
+            $update->actualizar();
+
+            // Redireccionar después de la actualización
+            header("Location: clientes.php");
+            exit();
+        }
+        ?>
         <form action="actualizar_cliente.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -137,7 +137,7 @@
                 <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='clientes.php';">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
             </div>
-            
+
         </form>
     </div>
 </body>

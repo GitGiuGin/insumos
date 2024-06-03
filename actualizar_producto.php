@@ -67,7 +67,6 @@
         $id = $_GET['id'];
         $producto = Producto::getId($id);
         ?>
-
         <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             include_once("logic/Producto.php");
