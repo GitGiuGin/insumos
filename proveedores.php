@@ -28,6 +28,7 @@ $proveedores = Proveedor::consultar();
     <!-- Enlace al CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/87c2e600b0.js" crossorigin="anonymous"></script>
 </head>
 <header>
     <!-- Navbar -->
@@ -116,8 +117,8 @@ $proveedores = Proveedor::consultar();
                     <td><?php echo $proveedor->telefono; ?></td>
                     <td><?php echo $proveedor->correo; ?></td>
                     <td><?php echo $proveedor->direccion; ?></td>
-                    <td><a href='actualizar_proveedor.php?id=<?php echo $proveedor->id; ?>'>Editar</a></td>
-                    <td><a href='proveedores.php?eliminar_id=<?php echo $proveedor->id; ?>'>Eliminar</a></td>
+                    <td><a class="btn btn-small btn-warning" href='actualizar_proveedor.php?id=<?php echo $proveedor->id; ?>'><i class="fa-solid fa-pen"></i></a></td>
+                    <td><a class="btn btn-small btn-danger" href='proveedores.php?eliminar_id=<?php echo $proveedor->id; ?>'><i class="fa-solid fa-trash"></i></a></td>
                 </tr>
                 <?php } ?>
             </tbody>

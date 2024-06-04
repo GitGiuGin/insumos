@@ -27,6 +27,7 @@ $clientes = Cliente::consultar();
     <!-- Enlace al CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/87c2e600b0.js" crossorigin="anonymous"></script>
 </head>
 <header>
     <!-- Navbar -->
@@ -89,7 +90,7 @@ $clientes = Cliente::consultar();
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="nombre" id="numero_de_documento" value="numero_de_documento">
-                <label class="form-check-label" for="categoria2">Numero de Documento</label>
+                <label class="form-check-label" for="categoria2">Documento</label>
             </div>
             <!-- Añadimos mas segun necesitemos -->
             <button class="btn btn-outline-success" type="submit">Buscar</button>
@@ -123,9 +124,8 @@ $clientes = Cliente::consultar();
                     <td><?php echo $cliente->direccion; ?></td>
                     <td><?php echo $cliente->telefono; ?></td>
                     <td><?php echo $cliente->correo; ?></td>
-                    <td><a href='actualizar_cliente.php?id=<?php echo $cliente->id; ?>'>Editar</a></td>
-                    <td><a href='clientes.php?eliminar_id=<?php echo $cliente->id; ?>'>Eliminar</a></td>
-                    
+                    <td><a class="btn btn-small btn-warning" href='actualizar_cliente.php?id=<?php echo $cliente->id; ?>'><i class="fa-solid fa-pen"></i></a></td>
+                    <td><a class="btn btn-small btn-danger" href='clientes.php?eliminar_id=<?php echo $cliente->id; ?>'><i class="fa-solid fa-trash"></i></a></td>
                 </tr>
                 <?php } ?>
             </tbody>

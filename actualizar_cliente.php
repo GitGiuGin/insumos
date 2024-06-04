@@ -91,19 +91,15 @@
         <form action="actualizar_cliente.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="id" class="form-label">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" value="<?php echo $cliente->id; ?>" readonly>
-                </div>
-                <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $cliente->nombre; ?>" required>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="apellido" class="form-label">Apellido</label>
                     <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo $cliente->apellido; ?>" required>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="tipo_documento" class="form-label">Tipo de Documento</label>
                     <select class="form-select" id="tipo_documento" name="tipo_documento" required>
@@ -112,22 +108,22 @@
                         <option value="NIT">NIT</option>
                     </select>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numero_documento" class="form-label">Número de Documento</label>
                     <input type="text" class="form-control" id="numero_documento" name="numero_documento" value="<?php echo $cliente->num_documento; ?>" required>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="direccion" class="form-label">Dirección</label>
                     <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $cliente->direccion; ?>" required>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="telefono" class="form-label">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $cliente->telefono; ?>" required>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="correo" class="form-label">Correo</label>
                     <input type="email" class="form-control" id="correo" name="correo" value="<?php echo $cliente->correo; ?>" required>
@@ -137,7 +133,7 @@
                 <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='clientes.php';">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
             </div>
-
+            <input type="hidden" class="form-control" id="id" name="id" value="<?php echo $cliente->id; ?>" readonly>
         </form>
     </div>
 </body>

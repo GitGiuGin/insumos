@@ -88,18 +88,18 @@
         <form action="actualizar_proveedor.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="id" class="form-label">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" value="<?php echo $proveedor->id; ?>" readonly>
-                </div>
-                <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $proveedor->nombre; ?>" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $proveedor->telefono; ?>" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $proveedor->telefono; ?>" required>
+                    <label for="numero_documento" class="form-label">NIT</label>
+                    <input type="text" class="form-control" id="numero_documento" name="numero_documento" value="<?php echo $proveedor->num_documento; ?>" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="correo" class="form-label">Correo</label>
@@ -116,6 +116,7 @@
                 <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='proveedores.php';">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
             </div>
+            <input type="hidden" class="form-control" id="id" name="id" value="<?php echo $proveedor->id; ?>" readonly>
         </form>
     </div>
 </body>

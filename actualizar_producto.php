@@ -89,19 +89,15 @@
         <form action="actualizar_producto.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="id" class="form-label">ID</label>
-                    <input type="number" class="form-control" id="id" name="id" value="<?php echo $producto->id; ?>" readonly>
-                </div>
-                <div class="col-md-6 mb-3">
                     <label for="codigo" class="form-label">Código</label>
                     <input type="text" class="form-control" id="codigo" name="codigo" value="<?php echo $producto->codigo; ?>" readonly>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $producto->nombre; ?>" readonly>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4 mb-2">
                     <label for="id_categoria" class="form-label">Categoría</label>
                     <a href="registrar_categoria.php">Nueva Categoria</a>
@@ -116,18 +112,16 @@
                         <?php } ?>
                     </select>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="precio_compra" class="form-label">Precio Compra</label>
                     <input type="number" step="0.01" class="form-control" id="precio_compra" name="precio_compra" value="<?php echo $producto->precio_compra; ?>" required>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="precio_venta" class="form-label">Precio Venta</label>
                     <input type="number" step="0.01" class="form-control" id="precio_venta" name="precio_venta" value="<?php echo $producto->precio_venta; ?>" required>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="cantidad" class="form-label">Cantidad</label>
                     <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $producto->cantidad; ?>" readonly>
@@ -137,7 +131,8 @@
                 <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='index.php';">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
             </div>
-        </form>
+            <input type="hidden" class="form-control" id="id" name="id" value="<?php echo $producto->id; ?>" readonly>
+        </form> 
     </div>
 </body>
 

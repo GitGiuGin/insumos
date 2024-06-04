@@ -37,7 +37,7 @@ class Proveedor extends Conexion{
 
     public function actualizar(){
         $this->conectar();
-        $sql = "UPDATE proveedor SET nombre=?, num_documento=?, telefono=?, correo=?, direccion=?, WHERE id=?";
+        $sql = "UPDATE proveedor SET nombre=?, num_documento=?, telefono=?, correo=?, direccion=? WHERE id=?";
         $pre = mysqli_prepare($this->conn, $sql);
         $pre->bind_param("sssssi", $this->nombre, $this->num_documento, $this->telefono, $this->correo, $this->direccion, $this->id);
         $pre->execute();

@@ -27,6 +27,7 @@ $productos = Producto::consultar();
     <!-- Enlace al CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/87c2e600b0.js" crossorigin="anonymous"></script>
 </head>
 <header>
     <!-- Navbar -->
@@ -121,9 +122,8 @@ $productos = Producto::consultar();
                         <td><?php echo $producto->precio_compra; ?></td>
                         <td><?php echo $producto->precio_venta; ?></td>
                         <td><?php echo $producto->cantidad; ?></td>
-                        <td><a href='actualizar_producto.php?id=<?php echo $producto->id; ?>'>Editar</a></td>
-                        <td><a href='productos.php?eliminar_id=<?php echo $producto->id; ?>'>Eliminar</a></td>
-
+                        <td><a class="btn btn-small btn-warning" href='actualizar_producto.php?id=<?php echo $producto->id; ?>'><i class="fa-solid fa-pen"></i></a></td>
+                        <td><a class="btn btn-small btn-danger" href='productos.php?eliminar_id=<?php echo $producto->id; ?>'><i class="fa-solid fa-trash"></i></a></td>
                     </tr>
                 <?php } ?>
             </tbody>
