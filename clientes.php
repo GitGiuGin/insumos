@@ -84,16 +84,8 @@ $clientes = Cliente::consultar();
     <div class="container mt-5">
         <form class="d-flex" action="buscar.php" method="GET">
             <input class="form-control me-2" type="search" name="query" placeholder="Buscar" aria-label="Buscar">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="nombre" id="nombre" value="nombre">
-                <label class="form-check-label" for="categoria1">Nombre</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="nombre" id="numero_de_documento" value="numero_de_documento">
-                <label class="form-check-label" for="categoria2">Documento</label>
-            </div>
             <!-- Añadimos mas segun necesitemos -->
-            <button class="btn btn-outline-success" type="submit">Buscar</button>
+            <button class="btn btn-outline-success" type="submit">Reporte</button>
         </form>
 
     </div>

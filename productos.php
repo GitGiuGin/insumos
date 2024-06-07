@@ -85,17 +85,9 @@ $productos = Producto::consultar();
         <form class="d-flex" action="buscar.php" method="GET">
             <input class="form-control me-2" type="search" name="query" placeholder="Buscar" aria-label="Buscar">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="categoria" id="categoria" value="categoria">
-                <label class="form-check-label" for="categoria1">Categoría</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="nombre" id="nombre" value="nombre">
-                <label class="form-check-label" for="categoria2">Nombre</label>
-            </div>
             <!-- Añadimos mas segun necesitemos -->
-            <button class="btn btn-outline-success" type="submit">Buscar</button>
+            <button class="btn btn-outline-success" type="submit">Reporte</button>
         </form>
-
     </div>
 
     <div class="container mt-5">
@@ -106,6 +98,7 @@ $productos = Producto::consultar();
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
+                    <th>Pais Origen</th>
                     <th>Precio Compra</th>
                     <th>Precio Venta</th>
                     <th>Cantidad</th>
@@ -119,6 +112,7 @@ $productos = Producto::consultar();
                         <td><?php echo $producto->codigo; ?></td>
                         <td><?php echo $producto->nombre; ?></td>
                         <td><?php echo $producto->categoria; ?></td>
+                        <td><?php echo $producto->pais; ?></td>
                         <td><?php echo $producto->precio_compra; ?></td>
                         <td><?php echo $producto->precio_venta; ?></td>
                         <td><?php echo $producto->cantidad; ?></td>
