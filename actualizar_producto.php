@@ -79,6 +79,7 @@
             $update->precio_compra = $_POST['precio_compra'];
             $update->precio_venta = $_POST['precio_venta'];
             $update->cantidad = $_POST['cantidad'];
+            $update->id_pais = $_POST['id_pais'];
             $update->actualizar();
 
             // Redireccionar después de la actualización
@@ -98,7 +99,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 mb-2">
+                <div class="col-md-6 mb-3">
                     <label for="id_categoria" class="form-label">Categoría</label>
                     <a href="registrar_categoria.php">Nueva Categoria</a>
                     <?php
@@ -127,12 +128,27 @@
                     <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $producto->cantidad; ?>" readonly>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="precio_venta" class="form-label">Pais de origen</label>
+                    <?php
+                    include_once 'logic/Pais.php';
+                    $paises = Pais::consultar(); // Suponiendo que tienes un método estático en la clase Categoria para consultar las categorías
+                    ?>
+                    <select class="form-select" id="id_pais" name="id_pais" required>
+                        <option value="" disabled selected>Seleccione una País</option>
+                        <?php foreach ($paises as $pais) { ?>
+                            <option value="<?php echo $pais->id ?>"><?php echo $pais->nombre; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='index.php';">Cancelar</button>
+                <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='productos.php';">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
             </div>
             <input type="hidden" class="form-control" id="id" name="id" value="<?php echo $producto->id; ?>" readonly>
-        </form> 
+        </form>
     </div>
 </body>
 
