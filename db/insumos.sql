@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-06-2024 a las 18:01:33
+-- Tiempo de generación: 11-06-2024 a las 19:21:00
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -53,9 +53,9 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`id`, `nombre`) VALUES
-(3, 'Dispositivos médicos'),
-(4, 'Equipos médicos'),
-(5, 'Insumos médicos'),
+(3, 'Dispositivos medicos'),
+(4, 'Equipos medicos'),
+(5, 'Insumos medicos'),
 (2, 'Mobiliario'),
 (1, 'Repuestos');
 
@@ -188,14 +188,14 @@ CREATE TABLE `producto` (
 INSERT INTO `producto` (`id`, `codigo`, `nombre`, `id_categoria`, `id_pais`, `precio_compra`, `precio_venta`, `cantidad`) VALUES
 (6, 'SSP218DDA-ELR', 'SILLA DE RUEDA CON POZA BRAZO DESMONTABLE Y P', 4, 1, 1859.62, 2401.20, 1),
 (15, '71419360083', 'Artrosamin Crema Frasco X 227G Grande', 5, 1, 131.31, 144.93, 2),
-(16, 'INTCO-0001', 'GUANTES DE VINIL TALLA PEQUEÑA', 5, 3, 30.11, 43.01, 10),
+(16, 'INTCO-0001', 'GUANTES DE VINIL TALLA PEQUENA', 5, 3, 30.11, 43.01, 10),
 (17, '0714193620029 ', 'INMUNE COMPLEX X 60 CAPSULAS - INTERFARMA', 5, 1, 98.00, 129.00, 10),
-(18, 'ESTUCHE-DDP', 'ESTUCHE DE DISECCION DE 13 PIEZAS CON LAMINAS - DADDY PRO\r\n', 4, 3, 150.00, 167.04, 5),
-(19, 'B-35-1', 'CAMA INFANTIL DE 1 MOVIMIENTO CON BARANDAS Y RUEDAS - AMD', 2, 3, 3206.98, 4102.08, 2),
-(20, 'F-33', 'MESA DE ALIMENTACIÓN CON ALTURA REGULABLE - AMD', 2, 4, 863.52, 1134.55, 3),
+(18, 'ESTUCHE-DDP', 'ESTUCHE DE DISECCION DE 13 PIEZAS CON LAMINAS\r\n', 4, 3, 150.00, 167.04, 5),
+(19, 'B-35-1', 'CAMA INFANTIL DE 1 MOVIMIENTO CON BARANDAS Y RUEDAS', 2, 3, 3206.98, 4102.08, 2),
+(20, 'F-33', 'MESA DE ALIMENTACION CON ALTURA REGULABLE - AMD', 2, 4, 863.52, 1134.55, 3),
 (21, 'HEM-CL24', 'ABRAZADERA PARA TENSIÓMETRO AUTOMÁTICO-OMRON', 1, 1, 153.88, 189.93, 4),
-(22, 'OXM-INF-001', 'OXÍMETRO DE PULSO ADULTO E INFANTIL', 3, 2, 150.00, 185.00, 10),
-(23, '603BK', 'ESTETOSCOPIO CON CAMPANA DOBLE COLOR NEGRO AD DE 56CM-ADC', 3, 1, 365.63, 418.00, 6);
+(22, 'OXM-INF-001', 'OXIMETRO DE PULSO ADULTO E INFANTIL', 3, 2, 150.00, 185.00, 10),
+(23, '603BK', 'ESTETOSCOPIO CON CAMPANA DOBLE COLOR NEGRO DE 56CM', 3, 1, 365.63, 418.00, 6);
 
 -- --------------------------------------------------------
 

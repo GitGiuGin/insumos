@@ -1,6 +1,6 @@
 <?php
 
-include_once "db/Conexion.php";
+include_once __DIR__ . '/../db/Conexion.php';
 
 class Producto extends Conexion{
 

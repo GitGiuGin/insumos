@@ -86,7 +86,7 @@ $productos = Producto::consultar();
             <input class="form-control me-2" type="search" name="query" placeholder="Buscar" aria-label="Buscar">
             <div class="form-check form-check-inline">
             <!-- Añadimos mas segun necesitemos -->
-            <button class="btn btn-outline-success" type="submit">Reporte</button>
+            <a href="reporte/reporte_productos.php" class="btn btn-outline-success">Reporte</a>
         </form>
     </div>
 
