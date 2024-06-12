@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $producto->precio_compra = $_POST['precio_compra'];
         $producto->precio_venta = $_POST['precio_venta'];
         $producto->cantidad = $_POST['cantidad'];
+        $producto->id_pais = $_POST['id_pais'];
         $producto->crear();
 
         header("Location: productos.php");
@@ -91,13 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="codigo" class="form-label">Código</label>
                     <input type="text" class="form-control" id="codigo" name="codigo" required>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" required>
                 </div>
-                <div class="col-md-4 mb-2">
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
                     <label for="id_categoria" class="form-label">Categoría</label>
                     <a href="registrar_categoria.php">Nueva Categoría</a>
                     <?php
@@ -111,25 +112,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php } ?>
                     </select>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="precio_compra" class="form-label">Precio Compra</label>
                     <input type="number" step="0.01" class="form-control" id="precio_compra" name="precio_compra" required>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="precio_venta" class="form-label">Precio Venta</label>
                     <input type="number" step="0.01" class="form-control" id="precio_venta" name="precio_venta" required>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="cantidad" class="form-label">Cantidad</label>
                     <input type="number" class="form-control" id="cantidad" name="cantidad" required>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="precio_venta" class="form-label">Pais de origen</label>
+                    <?php
+                    include_once 'logic/Pais.php';
+                    $paises = Pais::consultar(); // Suponiendo que tienes un método estático en la clase Categoria para consultar las categorías
+                    ?>
+                    <select class="form-select" id="id_pais" name="id_pais" required>
+                        <option value="" disabled selected>Seleccione una País</option>
+                        <?php foreach ($paises as $pais) { ?>
+                            <option value="<?php echo $pais->id ?>"><?php echo $pais->nombre; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='index.php';">Cancelar</button>
+                <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='productos.php';">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Registrar</button>
             </div>
         </form>

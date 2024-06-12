@@ -17,9 +17,9 @@ class Producto extends Conexion{
 
     public function crear(){
         $this->conectar();
-        $sql = "INSERT INTO producto(codigo, nombre, id_categoria, pais, precio_compra, precio_venta, cantidad) VALUES (?,?,?,?,?,?,?)"; //Conulta SQL
+        $sql = "INSERT INTO producto(codigo, nombre, id_categoria, id_pais, precio_compra, precio_venta, cantidad) VALUES (?,?,?,?,?,?,?)"; //Conulta SQL
         $pre = mysqli_prepare($this->conn, $sql); //Preparacion de consulta para evitar inyecciones SQL
-        $pre->bind_param("ssiiddi", $this->codigo, $this->nombre, $this->id_categoria, $this->pais, $this->precio_compra, $this->precio_venta, $this->cantidad);
+        $pre->bind_param("ssiiddi", $this->codigo, $this->nombre, $this->id_categoria, $this->id_pais, $this->precio_compra, $this->precio_venta, $this->cantidad);
         $pre->execute(); //Se ejecuta la consulta
         $res = $pre->get_result(); //Devuelve boolean para verificar si se hizo la consulta
     }
